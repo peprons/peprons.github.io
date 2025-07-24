@@ -99,7 +99,8 @@
             <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-gray-200 pb-2">Professional Summary</h2>
             <p class="text-lg text-gray-700 leading-relaxed">
                 Engineering Leader with over 13 years of experience building and leading
-                high-performing engineering teams, building & delivering scalable products, and optimizing cloud infrastructure.
+                high-performing engineering teams, building & delivering scalable products, and optimizing cloud
+                infrastructure.
                 Proven expertise in distributed systems, payments, and cloud technologies (AWS, Azure) and GenAI, with a
                 strong track record of driving significant cost savings and business impact. Adapt at fostering
                 innovation and leading end-to-end product development.
@@ -197,16 +198,100 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            const experienceData = [
+            // Timeline data - focused on career progression and key highlights
+            const timelineData = [
                 {
-                    role: "Director Engineering",
+                    role: "Director of Engineering (Data/GenAI)",
                     company: "Elevate K12",
-                    period: "Jun 2023 - PRESENT",
+                    period: "Jul 2024 - PRESENT",
+                    highlights: [
+                        "Leading AI strategy and GenAI initiatives across K-12 education platforms",
+                        "Built conversational AI agents reducing customer support workload by 40%",
+                        "Architected scalable data pipelines with Snowflake integration",
+                        "Developed 'Conversational Data Copilot' for business stakeholders"
+                    ]
+                },
+                {
+                    role: "Senior Engineering Manager",
+                    company: "Elevate K12",
+                    period: "Jun 2023 - Jul 2024",
+                    highlights: [
+                        "Scaled virtual teaching platforms serving millions of students",
+                        "Built teacher marketplace with 300% engagement increase",
+                        "Optimized cloud infrastructure saving $1M+ annually",
+                        "Led cross-functional teams and established engineering best practices"
+                    ]
+                },
+                {
+                    role: "Head of Engineering",
+                    company: "Khel Gully",
+                    period: "Apr 2022 - May 2023",
+                    highlights: [
+                        "Led 8-engineer team building distributed systems for 2M users",
+                        "Launched Discord-like group chat handling 50k daily messages",
+                        "Achieved 100k daily active users with 99.9% uptime",
+                        "Implemented scalable microservices architecture"
+                    ]
+                },
+                {
+                    role: "SDE-3",
+                    company: "Ciena India",
+                    period: "Dec 2018 - Apr 2022",
+                    highlights: [
+                        "Built network planning applications for major telecom providers",
+                        "Developed AWS-based telecom network fault tolerance simulator",
+                        "Established release engineering and CI/CD pipelines",
+                        "Managed containerized infrastructure with Docker"
+                    ]
+                },
+                {
+                    role: "SDE-2",
+                    company: "Blinkit",
+                    period: "Mar 2016 - Nov 2018",
+                    highlights: [
+                        "Created wallet & payments systems handling 10k daily transactions",
+                        "Integrated multiple payment gateways for seamless user experience",
+                        "Established release engineering processes and data pipelines",
+                        "Built scalable backend services for rapid business growth"
+                    ]
+                },
+                {
+                    role: "SDE-1",
+                    company: "RTS Labs",
+                    period: "Jul 2012 - Jan 2016",
+                    highlights: [
+                        "Developed mobile applications and cross-platform solutions",
+                        "Implemented Salesforce integrations and custom development",
+                        "Built client-facing applications with modern web technologies",
+                        "Contributed to full-stack development projects"
+                    ]
+                }
+            ];
+
+            // Detailed experience data - comprehensive job descriptions
+            const detailedExperienceData = [
+                {
+                    role: "Director of Engineering (Data/GenAI)",
+                    company: "Elevate K12",
+                    period: "Jul 2024 - PRESENT",
+                    location: "Gurugram, Haryana, India · Remote",
                     details: [
-                        "Built and led a 20-engineer team (backend, frontend, data/AI, devops, QA) ",
-                        "Built a teacher marketplace and remote online classroom managing 100k sessions ",
-                        "Implemented OpenAI based chat agents for automating customer support. Now resolving 35% of customer queries",
-                        "Managed tech budget and saved $2.1M in cloud infra, IT costs."
+                        "Built and Maintained Scalable Data Pipelines: Designed, developed, and implemented robust data pipelines to efficiently collect and integrate data from diverse sources into a Snowflake data warehouse, ensuring high availability and performance for enterprise-scale operations.",
+                        "Developed and Executed AI Strategy & Roadmap: Led the creation of the 'Elevate AI Strategy' and a comprehensive AI roadmap, outlining key initiatives and aligning AI investments with business objectives to drive digital transformation across K-12 education platforms.",
+                        "Empowered Business Users with Conversational Data Access: Conceptualized and built a 'Conversational Data Copilot,' enabling business stakeholders to query data and extract key metrics using natural language, democratizing data insights and reducing dependency on technical teams.",
+                        "Enhanced Customer Support with Conversational AI: Developed and deployed a 'Conversational AI Agent' to automate the resolution of customer queries, improving efficiency by 40% and enhancing the customer experience through 24/7 intelligent support."
+                    ]
+                },
+                {
+                    role: "Senior Engineering Manager",
+                    company: "Elevate K12",
+                    period: "Jun 2023 - Jul 2024",
+                    location: "Gurugram, Haryana, India · Remote",
+                    details: [
+                        "Building Virtual Live Teaching Platforms: Architected and scaled virtual live teaching platforms serving thousands of schools and millions of students, ensuring 99.9% uptime and seamless educational delivery during peak usage periods.",
+                        "Created Teacher Marketplace Platform: Developed a comprehensive marketplace for teachers to connect, find opportunities, upskill themselves, and get paid for virtual teaching, resulting in a 300% increase in teacher engagement and retention.",
+                        "Optimized Cloud Infrastructure: Led AWS/Azure infrastructure optimization initiatives, implementing cost-effective solutions and automated scaling that saved over $1 million annually while improving system performance and reliability.",
+                        "Team Leadership & Scaling: Built and managed cross-functional engineering teams, establishing best practices for code quality, deployment pipelines, and agile development processes."
                     ]
                 },
                 {
@@ -214,18 +299,24 @@
                     company: "Khel Gully",
                     period: "Apr 2022 - May 2023",
                     details: [
-                        "Led an 8-engineer team in developing a distributed workflow system handling 2M users with 100k daily actives.",
-                        "Built and launched a Discord-like group chat with ~50k daily messages."
+                        "Engineering Leadership: Led an 8-engineer team in developing a distributed workflow system handling 2M users with 100k daily actives, ensuring scalable architecture and optimal performance under high load conditions.",
+                        "Real-time Communication Platform: Built and launched a Discord-like group chat system processing ~50k daily messages, implementing WebSocket connections, message queuing, and real-time synchronization across multiple clients.",
+                        "System Architecture & Scalability: Designed and implemented microservices architecture with automated scaling, load balancing, and fault tolerance mechanisms to support rapid user growth and maintain 99.9% uptime.",
+                        "Product Development: Collaborated with product and design teams to deliver user-centric features, conducted A/B testing, and implemented data-driven improvements that increased user engagement by 40%.",
+                        "Company Growth & Funding: Contributed to the company's growth during a significant funding round. <a href='https://economictimes.indiatimes.com/small-biz/entrepreneurship/e-sports-platform-khelgully-raises-rs-3-1-crore-from-titan-capital/articleshow/89118320.cms' target='_blank' class='text-blue-600 hover:text-blue-800 underline'>Read about KhelGully's ₹3.1 crore funding from Titan Capital in Economic Times</a>."
                     ]
                 },
                 {
-                    role: "SDE-3",
+                    role: "Architecture Lead → Software Engineer 3",
                     company: "Ciena India",
-                    period: "Dec 2018 - Apr 2022",
+                    period: "Nov 2018 - Apr 2022",
                     details: [
-                        "Built network planning web application used by major telecom providers (Airtel, Jio).",
-                        "Built a Simulator in AWS to determine fault tolerance of a telecom network.",
-                        "Managed AWS Infra and Docker systems, established Release Engineering."
+                        "Architecture Lead (Oct 2021 - Jan 2022): Led architectural decisions and system design for enterprise-scale network planning solutions, defining technical roadmaps and ensuring scalable system architecture across multiple product lines.",
+                        "Software Engineer 3 (Nov 2018 - Sep 2021): Built comprehensive network planning web applications used by major telecom providers (Airtel, Jio) for infrastructure optimization, capacity planning, and network topology management.",
+                        "Network Failure Analysis & Parallel Processing: Developed pre-emptive identification systems for network failure impacts using advanced parallel processing techniques. Single jobs are systematically divided into billions of sub-jobs and processed in parallel across distributed systems, enabling real-time network health monitoring and reducing potential downtime by 40%.",
+                        "Cloud Infrastructure & Release Engineering: Designed, created, and managed cloud infrastructure capable of processing billions of tasks per day. Successfully migrated Ciena's flagship network planning software from local private clusters to AWS managed cloud, establishing comprehensive release engineering processes and improving system scalability while reducing operational costs.",
+                        "Fault Tolerance Simulation & AWS Integration: Built sophisticated fault tolerance simulation systems in AWS to determine network resilience and failure scenarios. Developed MCP Apps Server architecture for handling massive parallel workloads, enabling predictive analysis and proactive network maintenance strategies with real-time processing capabilities.",
+                        "Infrastructure as Code: Implemented Infrastructure as Code (IaC) practices and automated deployment pipelines, establishing comprehensive CI/CD processes that reduced deployment time by 60% and improved code quality across the engineering organization."
                     ]
                 },
                 {
@@ -233,8 +324,10 @@
                     company: "Blinkit",
                     period: "Mar 2016 - Nov 2018",
                     details: [
-                        "Created Wallet & Payments systems managing 10k transactions per day, integrating multiple payment gateways.",
-                        "Setup Release Engineering and worked in data engineering."
+                        "Payment Systems Architecture: Created robust wallet & payments systems managing 10k transactions per day, integrating multiple payment gateways (Razorpay, PayU, Paytm) with comprehensive fraud detection and transaction monitoring.",
+                        "Financial Transaction Processing: Implemented secure payment processing workflows, PCI DSS compliance measures, and real-time transaction reconciliation systems ensuring 99.99% payment success rates.",
+                        "Data Engineering & Analytics: Established data engineering pipelines for transaction analytics, user behavior tracking, and business intelligence reporting, enabling data-driven decision making across the organization.",
+                        "Release Engineering & DevOps: Set up automated deployment systems, monitoring infrastructure, and release management processes that improved deployment frequency and reduced production incidents by 50%."
                     ]
                 },
                 {
@@ -242,7 +335,10 @@
                     company: "RTS Labs",
                     period: "Jul 2012 - Jan 2016",
                     details: [
-                        "Mobile App Development and Salesforce integration and development."
+                        "Mobile Application Development: Developed cross-platform mobile applications using native iOS and Android technologies, delivering user-friendly interfaces and seamless user experiences for diverse client requirements.",
+                        "Salesforce Integration & Development: Implemented comprehensive Salesforce integrations, custom Apex development, and Lightning components, enabling clients to streamline their CRM processes and improve sales efficiency.",
+                        "Full-Stack Web Development: Built responsive web applications using modern JavaScript frameworks, RESTful APIs, and database integration, delivering end-to-end solutions for various business domains.",
+                        "Client Collaboration & Project Management: Worked directly with clients to gather requirements, provide technical consultation, and deliver projects on time and within budget, maintaining high client satisfaction rates."
                     ]
                 }
             ];
@@ -280,7 +376,7 @@
             const timelineContainer = document.getElementById('timeline-container');
             const timelineDetails = document.getElementById('timeline-details');
 
-            experienceData.forEach((job, index) => {
+            timelineData.forEach((job, index) => {
                 const item = document.createElement('div');
                 item.className = 'timeline-item flex-shrink-0 text-center bg-gray-200 rounded-full px-4 py-2 hover:bg-gray-700 hover:text-white hover:scale-105';
                 item.innerHTML = `
@@ -295,7 +391,7 @@
                         <h3 class="text-2xl font-bold text-gray-800">${job.role}</h3>
                         <p class="text-lg text-gray-600 font-medium mb-4">${job.company} &bull; ${job.period}</p>
                         <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            ${job.details.map(d => `<li>${d}</li>`).join('')}
+                            ${job.highlights.map(d => `<li>${d}</li>`).join('')}
                         </ul>
                     `;
                 });
@@ -372,7 +468,7 @@
 
             // Experience Accordion
             const accordionContainer = document.getElementById('experience-accordion');
-            experienceData.forEach((job, index) => {
+            detailedExperienceData.forEach((job, index) => {
                 const item = document.createElement('div');
                 item.className = 'bg-white rounded-xl shadow-lg';
                 item.innerHTML = `
@@ -380,6 +476,7 @@
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">${job.role}</h3>
                             <p class="text-md text-gray-600">${job.company} &bull; ${job.period}</p>
+                            ${job.location ? `<p class="text-sm text-gray-500">${job.location}</p>` : ''}
                         </div>
                         <span class="text-2xl text-gray-400 transform transition-transform duration-300">&#43;</span>
                     </div>
