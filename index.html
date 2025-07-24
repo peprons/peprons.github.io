@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume - Nand Sharma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Warm Neutral" - A calming palette with a light beige/gray background, dark text for readability, and subtle slate/blue accents for interactive elements and highlights. -->
+    <!-- Application Structure Plan: A single-page dashboard design is chosen for its modern feel and ability to present key information upfront. The structure includes: 1) A header with contact info and a powerful summary. 2) A dynamic stats bar for immediate impact. 3) An interactive timeline for exploring career progression visually. 4) A skills section with categorized lists and a bar chart for quick assessment. 5) A detailed experience section with accordions for drill-down. This non-linear structure allows recruiters to quickly jump to sections of interest, making the information more digestible and engaging than a traditional resume. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Key career metrics ($1.1M saved, 20 engineers led, etc.) -> Goal: Inform/Impact -> Viz: Dynamic number counters -> Interaction: Animate on load -> Justification: Grabs attention and highlights key achievements immediately. -> Library/Method: Vanilla JS.
+        - Report Info: Career history -> Goal: Show Change/Organize -> Viz: Interactive horizontal timeline -> Interaction: Click on a job to display its details -> Justification: Visually represents career growth over time in an engaging way. -> Library/Method: HTML/CSS/JS.
+        - Report Info: Technical skills -> Goal: Compare/Inform -> Viz: Horizontal bar chart -> Interaction: Tooltips on hover -> Justification: Provides a quick, visual comparison of technical proficiencies. -> Library/Method: Chart.js.
+        - Report Info: Detailed job descriptions -> Goal: Organize/Inform -> Viz: Collapsible accordions -> Interaction: Click to expand/collapse -> Justification: Keeps the UI clean and allows users to access details on demand. -> Library/Method: Vanilla JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+
+        .stat-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-item {
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .timeline-item.active {
+            background-color: #4a5568;
+            /* slate-700 */
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .accordion-header {
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-gray-800">Nand Sharma</h1>
+            <p class="text-xl text-gray-600 mt-2">Engineering Leader</p>
+            <div class="flex justify-center items-center space-x-4 mt-4 text-gray-500">
+                <a href="mailto:sharma.nandkishore.91@gmail.com"
+                    class="hover:text-gray-800 transition">sharma.nandkishore.91@gmail.com</a>
+                <span>&bull;</span>
+                <a href="https://www.linkedin.com/in/nand-sharma/" target="_blank"
+                    class="hover:text-gray-800 transition">LinkedIn</a>
+                <span>&bull;</span>
+                <a href="https://github.com/peprons" target="_blank" class="hover:text-gray-800 transition">GitHub</a>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <section id="summary" class="mb-16 bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-gray-200 pb-2">Professional Summary</h2>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                Engineering Leader with over 13 years of experience building and leading
+                high-performing engineering teams, building & delivering scalable products, and optimizing cloud infrastructure.
+                Proven expertise in distributed systems, payments, and cloud technologies (AWS, Azure) and GenAI, with a
+                strong track record of driving significant cost savings and business impact. Adapt at fostering
+                innovation and leading end-to-end product development.
+            </p>
+        </section>
+
+        <!-- Key Metrics -->
+        <section id="metrics" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Career Highlights at a Glance</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg text-center">
+                    <p class="text-5xl font-extrabold text-blue-600" id="cost-saved">0</p>
+                    <p class="text-lg text-gray-600 mt-2">Million USD Saved</p>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg text-center">
+                    <p class="text-5xl font-extrabold text-green-600" id="team-led">0</p>
+                    <p class="text-lg text-gray-600 mt-2">Engineers Team Lead</p>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg text-center">
+                    <p class="text-5xl font-extrabold text-purple-600" id="users-served">0</p>
+                    <p class="text-lg text-gray-600 mt-2">Million Users Handled</p>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-lg text-center">
+                    <p class="text-5xl font-extrabold text-orange-600" id="batch-jobs">0</p>
+                    <p class="text-lg text-gray-600 mt-2">Billion Batch Jobs Executed</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Interactive Timeline -->
+        <section id="timeline" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Career Timeline</h2>
+            <div class="w-full overflow-x-auto pb-4">
+                <div id="timeline-container" class="flex items-center space-x-4 md:space-x-8 min-w-max px-4">
+                </div>
+            </div>
+            <div id="timeline-details"
+                class="mt-8 bg-white p-8 rounded-xl shadow-lg min-h-[200px] transition-all duration-500">
+                <p class="text-center text-gray-500">Click on a role in the timeline above to see details.</p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Technical Expertise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">Core Competencies</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-600">Languages & Frameworks</h4>
+                            <p class="text-gray-700">Python, Flask, Streamlit</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-600">Cloud & DevOps</h4>
+                            <p class="text-gray-700">AWS, Azure, Kafka, Elastic Search, ELK, Ansible, Docker</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-600">Databases</h4>
+                            <p class="text-gray-700">Snowflake, DynamoDB, Postgres, MySQL, Redis</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-600">AI/ML</h4>
+                            <p class="text-gray-700">GenAI, Conversational AI Agents</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-600">Methodologies & Others</h4>
+                            <p class="text-gray-700">Agile, Distributed Systems, Microservices, Payments Systems, Budget
+                                Management</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4 text-center">Proficiency Overview</h3>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">A visual representation of key technical skills.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Detailed Experience -->
+        <section id="experience">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Detailed Experience</h2>
+            <div id="experience-accordion" class="space-y-4">
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const experienceData = [
+                {
+                    role: "Director Engineering",
+                    company: "Elevate K12",
+                    period: "Jun 2023 - PRESENT",
+                    details: [
+                        "Built and led a 20-engineer team (backend, frontend, data/AI, devops, QA) ",
+                        "Built a teacher marketplace and remote online classroom managing 100k sessions ",
+                        "Implemented OpenAI based chat agents for automating customer support. Now resolving 35% of customer queries",
+                        "Managed tech budget and saved $2.1M in cloud infra, IT costs."
+                    ]
+                },
+                {
+                    role: "Head of Engineering",
+                    company: "Khel Gully",
+                    period: "Apr 2022 - May 2023",
+                    details: [
+                        "Led an 8-engineer team in developing a distributed workflow system handling 2M users with 100k daily actives.",
+                        "Built and launched a Discord-like group chat with ~50k daily messages."
+                    ]
+                },
+                {
+                    role: "SDE-3",
+                    company: "Ciena India",
+                    period: "Dec 2018 - Apr 2022",
+                    details: [
+                        "Built network planning web application used by major telecom providers (Airtel, Jio).",
+                        "Built a Simulator in AWS to determine fault tolerance of a telecom network.",
+                        "Managed AWS Infra and Docker systems, established Release Engineering."
+                    ]
+                },
+                {
+                    role: "SDE-2",
+                    company: "Blinkit",
+                    period: "Mar 2016 - Nov 2018",
+                    details: [
+                        "Created Wallet & Payments systems managing 10k transactions per day, integrating multiple payment gateways.",
+                        "Setup Release Engineering and worked in data engineering."
+                    ]
+                },
+                {
+                    role: "SDE-1",
+                    company: "RTS Labs",
+                    period: "Jul 2012 - Jan 2016",
+                    details: [
+                        "Mobile App Development and Salesforce integration and development."
+                    ]
+                }
+            ];
+
+            // Animated counters
+            function animateValue(obj, start, end, duration, isFloat = false) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    let currentValue = progress * (end - start) + start;
+                    if (isFloat) {
+                        obj.innerHTML = currentValue.toFixed(1);
+                    } else {
+                        obj.innerHTML = Math.floor(currentValue);
+                    }
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            const costSavedEl = document.getElementById('cost-saved');
+            const teamLedEl = document.getElementById('team-led');
+            const usersServedEl = document.getElementById('users-served');
+            const batchJobsEl = document.getElementById('batch-jobs');
+
+            animateValue(costSavedEl, 0, 2.1, 2000, true);
+            animateValue(teamLedEl, 0, 20, 2000);
+            animateValue(usersServedEl, 0, 30, 2000);
+            animateValue(batchJobsEl, 0, 5, 2000);
+
+            // Timeline
+            const timelineContainer = document.getElementById('timeline-container');
+            const timelineDetails = document.getElementById('timeline-details');
+
+            experienceData.forEach((job, index) => {
+                const item = document.createElement('div');
+                item.className = 'timeline-item flex-shrink-0 text-center bg-gray-200 rounded-full px-4 py-2 hover:bg-gray-700 hover:text-white hover:scale-105';
+                item.innerHTML = `
+                    <p class="font-bold">${job.company}</p>
+                    <p class="text-sm">${job.period.split(' - ')[0]}</p>
+                `;
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+
+                    timelineDetails.innerHTML = `
+                        <h3 class="text-2xl font-bold text-gray-800">${job.role}</h3>
+                        <p class="text-lg text-gray-600 font-medium mb-4">${job.company} &bull; ${job.period}</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            ${job.details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    `;
+                });
+                timelineContainer.appendChild(item);
+                if (index === 0) {
+                    item.click();
+                }
+            });
+
+            // Skills Chart
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Python', 'AWS/Azure', 'Distributed Systems', 'Databases', 'GenAI', 'Leadership'],
+                    datasets: [{
+                        label: 'Proficiency',
+                        data: [95, 90, 90, 85, 80, 98],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.7)',
+                            'rgba(249, 115, 22, 0.7)',
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(139, 92, 246, 0.7)',
+                            'rgba(236, 72, 153, 0.7)',
+                            'rgba(107, 114, 128, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(249, 115, 22, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(139, 92, 246, 1)',
+                            'rgba(236, 72, 153, 1)',
+                            'rgba(107, 114, 128, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function (value) {
+                                    return value + "%"
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Experience Accordion
+            const accordionContainer = document.getElementById('experience-accordion');
+            experienceData.forEach((job, index) => {
+                const item = document.createElement('div');
+                item.className = 'bg-white rounded-xl shadow-lg';
+                item.innerHTML = `
+                    <div class="accordion-header p-6 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">${job.role}</h3>
+                            <p class="text-md text-gray-600">${job.company} &bull; ${job.period}</p>
+                        </div>
+                        <span class="text-2xl text-gray-400 transform transition-transform duration-300">&#43;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6 pt-0">
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                ${job.details.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                accordionContainer.appendChild(item);
+
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = header.querySelector('span');
+
+                header.addEventListener('click', () => {
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.innerHTML = '&#43;';
+                        icon.classList.remove('rotate-45');
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
+                        document.querySelectorAll('.accordion-header span').forEach(el => {
+                            el.innerHTML = '&#43;';
+                            el.classList.remove('rotate-45');
+                        });
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.innerHTML = '&#215;'; // x sign
+                        icon.classList.add('rotate-45');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
